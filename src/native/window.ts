@@ -153,6 +153,11 @@ export function createMainWindow() {
 
   // configure spellchecker context menu
   mainWindow.webContents.on("context-menu", (_, params) => {
+    // Only show this menu if the user is right-clicking editable text or a misspelled word
+    if (!params.isEditable && !params.misspelledWord) {
+      return;
+    }
+
     const menu = new Menu();
 
     // add all suggestions
